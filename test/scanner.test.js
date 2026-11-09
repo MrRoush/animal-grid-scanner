@@ -33,11 +33,22 @@ test("exact match", () => {
   assert.equal(m.distance, 0);
 });
 
-test("tolerates two misread cells but not three", () => {
+test("has 16 animals with a wiki title each", () => {
+  assert.equal(ANIMALS.length, 16);
+  for (const a of ANIMALS) assert.ok(a.name && a.wiki, a.name);
+});
+
+test("inexact patterns resolve to the closest animal", () => {
   const flip = (s, i) => s.slice(0, i) + (s[i] === "1" ? "0" : "1") + s.slice(i + 1);
-  const p = ANIMALS[0].pattern;
-  assert.equal(matchPattern(flip(flip(p, 0), 7), ANIMALS).animal.name, ANIMALS[0].name);
-  assert.equal(matchPattern(flip(flip(flip(p, 0), 7), 12), ANIMALS), null);
+  for (const a of ANIMALS) {
+    const m = matchPattern(flip(flip(a.pattern, 0), 7), ANIMALS);
+    assert.equal(m.animal.name, a.name);
+    assert.equal(m.distance, 2);
+  }
+  const far = flip(flip(flip(ANIMALS[0].pattern, 0), 7), 12);
+  const m = matchPattern(far, ANIMALS);
+  assert.ok(m);
+  assert.equal(m.distance, Math.min(...ANIMALS.map((a) => hamming(far, a.pattern))));
 });
 
 test("lumToBits thresholds and rejects low contrast", () => {
