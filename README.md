@@ -5,9 +5,10 @@ A QR-code-style demo: point your webcam at a printed 4×4 black-and-white grid a
 ## How it works
 
 - Each cell is one bit (black = 1, white = 0), read row by row, giving a 16-bit pattern.
-- `js/animals.js` maps 16 patterns to animals. Patterns differ by at least 5 cells (also when rotated), and the scanner always picks the closest pattern, so a few misread cells still resolve to the right animal.
+- A 4×4 grid has 65,536 possible patterns. `js/animals.js` maps 35 of them to animals. Patterns differ by at least 5 cells (also when rotated), so the closest-pattern scanner can still resolve up to two misread cells.
 - The user aligns the grid inside the on-screen square and presses **Scan**. `js/scanner.js` averages the centre of each cell, thresholds at the midpoint between the darkest and lightest cell, and matches.
 - Images come from the Wikipedia REST summary API (`js/wiki.js`), with a link back to the article for author and license details.
+- Open `animals.html` to browse the animals and their linked pictures; images load as you scroll.
 
 ## Run locally
 

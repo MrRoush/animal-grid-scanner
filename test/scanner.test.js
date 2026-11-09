@@ -10,7 +10,11 @@ const rotate = (p) => {
 };
 
 test("patterns are valid and unique", () => {
-  for (const a of ANIMALS) assert.match(a.pattern, /^[01]{16}$/);
+  for (const a of ANIMALS) {
+    assert.match(a.pattern, /^[01]{16}$/);
+    const blackCells = [...a.pattern].filter((bit) => bit === "1").length;
+    assert.ok(blackCells >= 4 && blackCells <= 12, `${a.name} has too little contrast`);
+  }
   assert.equal(new Set(ANIMALS.map((a) => a.pattern)).size, ANIMALS.length);
 });
 
@@ -33,8 +37,8 @@ test("exact match", () => {
   assert.equal(m.distance, 0);
 });
 
-test("has 16 animals with a wiki title each", () => {
-  assert.equal(ANIMALS.length, 16);
+test("has 35 animals with a wiki title each", () => {
+  assert.equal(ANIMALS.length, 35);
   for (const a of ANIMALS) assert.ok(a.name && a.wiki, a.name);
 });
 
