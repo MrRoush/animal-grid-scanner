@@ -66,9 +66,10 @@ button {
 }
 
 #grids {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  gap: 1.5rem;
+  --cell: 2cm; /* set from the size selector in js/print.js */
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1cm;
 }
 
 figure {
@@ -79,8 +80,9 @@ figure {
 
 .print-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  aspect-ratio: 1;
+  grid-template-columns: repeat(4, var(--cell));
+  grid-template-rows: repeat(4, var(--cell));
+  width: calc(4 * var(--cell));
   outline: 2px solid #999;
   outline-offset: 6px;
   margin: 8px;
@@ -94,7 +96,24 @@ figure {
 }
 
 @media print {
+  @page {
+    margin: 1cm;
+  }
+
   body {
     background: #fff;
+  }
+
+  .no-print {
+    display: none;
+  }
+
+  .print-page main {
+    max-width: none;
+    padding: 0;
+  }
+
+  #grids {
+    gap: 0.8cm;
   }
 }

@@ -13,6 +13,23 @@
         Print this page and cut out each grid. Keep the grid upright when scanning.
         <a href="index.html">Back to scanner</a>
       </p>
+      <p class="no-print">
+        <label>
+          Square size
+          <select id="cell-size">
+            <option value="1.5">1.5 cm (6 cm grid) – close range, ~15 cm</option>
+            <option value="2" selected>2 cm (8 cm grid) – recommended, ~20 cm</option>
+            <option value="3">3 cm (12 cm grid) – laptop at arm's length, ~30 cm</option>
+            <option value="4">4 cm (16 cm grid) – across a desk, ~40 cm</option>
+          </select>
+        </label>
+        <br />
+        <small>
+          Print at 100% / "Actual size" (not "Fit to page") so squares are the
+          size selected. Hold the grid so it fills the green guide square; the
+          grey outline is only a cutting guide.
+        </small>
+      </p>
       <div id="grids"></div>
     </main>
     <script type="module" src="js/print.js"></script>

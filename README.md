@@ -16,7 +16,7 @@ npm start        # serves http://localhost:8000
 npm test         # runs the matching tests
 ```
 
-Camera access requires HTTPS or `localhost`. Open `print.html` to print the grids.
+Camera access requires HTTPS or `localhost`. Open `print.html` to print the grids at a true physical size (pick 1.5–4 cm squares; print at 100%, 2 cm is a good default).
 
 ## Deploy to GitHub Pages
 

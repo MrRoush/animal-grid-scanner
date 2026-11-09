@@ -1,6 +1,19 @@
 import { ANIMALS } from "./animals.js";
 
 const container = document.getElementById("grids");
+const select = document.getElementById("cell-size");
+
+function setCellSize(cm) {
+  container.style.setProperty("--cell", `${cm}cm`);
+}
+
+const saved = new URLSearchParams(location.search).get("cell");
+if ([...select.options].some((o) => o.value === saved)) select.value = saved;
+setCellSize(select.value);
+select.addEventListener("change", () => {
+  setCellSize(select.value);
+  history.replaceState(null, "", `?cell=${select.value}`);
+});
 
 for (const animal of ANIMALS) {
   const figure = document.createElement("figure");
