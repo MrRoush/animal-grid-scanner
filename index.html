@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Animal Grid Scanner</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main>
+      <h1>Animal Grid Scanner</h1>
+      <p>
+        Hold a printed 4&times;4 black-and-white grid inside the square, then press Scan.
+        <a href="print.html">Print the grids</a>.
+      </p>
+
+      <div class="camera">
+        <video id="video" playsinline muted></video>
+        <div id="guide" class="guide" hidden></div>
+      </div>
+
+      <div class="controls">
+        <button id="start" type="button">Start camera</button>
+        <button id="scan" type="button" disabled>Scan</button>
+      </div>
+      <p id="status" role="status">Camera is off. Images are processed in your browser and never uploaded.</p>
+
+      <section id="result" aria-live="polite"></section>
+    </main>
+    <script type="module" src="js/app.js"></script>
+  </body>
+</html>

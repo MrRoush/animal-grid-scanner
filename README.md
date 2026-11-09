@@ -1,2 +1,30 @@
-# animal-grid-scanner
-Scan a 4x4 black-and-white grid with your webcam to reveal an animal. A QR-code-style demo that runs entirely in the browser.
+# Animal Grid Scanner
+
+A QR-code-style demo: point your webcam at a printed 4×4 black-and-white grid and the app shows the matching animal with an image from Wikipedia/Wikimedia Commons. Everything runs in the browser; camera frames are never uploaded.
+
+## How it works
+
+- Each cell is one bit (black = 1, white = 0), read row by row, giving a 16-bit pattern.
+- `js/animals.js` maps 8 patterns to animals. Patterns differ by at least 5 cells, so the scanner picks the nearest match and tolerates up to 2 misread cells.
+- The user aligns the grid inside the on-screen square and presses **Scan**. `js/scanner.js` averages the centre of each cell, thresholds at the midpoint between the darkest and lightest cell, and matches.
+- Images come from the Wikipedia REST summary API (`js/wiki.js`), with a link back to the article for author and license details.
+
+## Run locally
+
+```sh
+npm start        # serves http://localhost:8000
+npm test         # runs the matching tests
+```
+
+Camera access requires HTTPS or `localhost`. Open `print.html` to print the grids.
+
+## Deploy to GitHub Pages
+
+Settings → Pages → Deploy from a branch → `main` / `(root)`. The site is served over HTTPS, so the camera works.
+
+## Roadmap
+
+- Automatic grid detection and rotation handling
+- Continuous scanning instead of a Scan button
+- Add a border/marker to the printed grids for easier detection
+- More animals (keep patterns ≥ 5 cells apart; `npm test` checks this)
