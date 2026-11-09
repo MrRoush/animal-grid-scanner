@@ -18,15 +18,14 @@ export function lumToBits(lum) {
   return { bits: lum.map((v) => (v < threshold ? "1" : "0")).join(""), contrast };
 }
 
-// Finds the closest animal. Returns { animal, distance } or null if none is
-// within `maxDistance` cells, or if the match is ambiguous.
-export function matchPattern(bits, animals, maxDistance = 2) {
-  const ranked = animals
-    .map((animal) => ({ animal, distance: hamming(bits, animal.pattern) }))
-    .sort((a, b) => a.distance - b.distance);
-  const [best, second] = ranked;
-  if (!best || best.distance > maxDistance) return null;
-  if (second && second.distance === best.distance) return null;
+// Always returns the closest animal as { animal, distance } (distance 0 is an
+// exact match), or null if `animals` is empty. Ties go to the first listed.
+export function matchPattern(bits, animals) {
+  let best = null;
+  for (const animal of animals) {
+    const distance = hamming(bits, animal.pattern);
+    if (!best || distance < best.distance) best = { animal, distance };
+  }
   return best;
 }
 

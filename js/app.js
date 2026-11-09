@@ -58,7 +58,7 @@ function scan() {
   }
   const match = matchPattern(read.bits, ANIMALS);
   if (!match) {
-    showMessage(`Unknown pattern (${read.bits}). Try again.`);
+    showMessage("No animals are configured.");
     return;
   }
   showAnimal(match.animal, match.distance);
@@ -71,12 +71,15 @@ function showMessage(text) {
 async function showAnimal(animal, distance) {
   const title = Object.assign(document.createElement("h2"), { textContent: animal.name });
   const note = Object.assign(document.createElement("p"), {
-    textContent: distance ? `Matched with ${distance} misread cell${distance > 1 ? "s" : ""}.` : "",
+    textContent: distance ? `Closest match (${distance} cell${distance > 1 ? "s" : ""} differ).` : "",
   });
   resultEl.replaceChildren(title, note);
   try {
     const info = await fetchAnimalImage(animal.wiki);
-    if (!info.src) return;
+    if (!info.src) {
+      note.textContent += " (No image available for this animal.)";
+      return;
+    }
     const img = Object.assign(document.createElement("img"), {
       src: info.src,
       alt: animal.name,
